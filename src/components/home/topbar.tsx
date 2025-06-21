@@ -13,10 +13,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
-import { useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 
 export function Topbar() {
-  const [isLoggedIn] = useState(false);
+  const { isAuthenticated, logout } = useAuth();
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between px-4">
@@ -38,7 +38,7 @@ export function Topbar() {
 
         {/* Navigation */}
         <nav className="flex items-center space-x-2">
-          {!isLoggedIn && (
+          {!isAuthenticated && (
             <>
               <Button asChild className="cursor-pointer" variant="secondary">
                 <Link href="/login">Iniciar Sesión</Link>
@@ -49,7 +49,7 @@ export function Topbar() {
             </>
           )}
 
-          {isLoggedIn && (
+          {isAuthenticated && (
             <>
               <Button
                 variant="ghost"
@@ -83,7 +83,7 @@ export function Topbar() {
                   <DropdownMenuItem>Configuración</DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
-                    <Link href="/login">Cerrar Sesión</Link>
+                    <Button onClick={logout}>Cerrar Sesión</Button>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
