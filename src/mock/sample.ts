@@ -2,7 +2,7 @@ export const services = [
   {
     id: "service-1",
     title:
-      "I will develop a responsive web application using React and Node.js",
+      "Desarrollaré una aplicación web para tu proyecto universitario (React + Node.js)", // Programación
     seller: {
       name: "Alex Johnson",
       avatar: "https://picsum.photos/seed/alex/40/40",
@@ -16,7 +16,8 @@ export const services = [
   },
   {
     id: "service-2",
-    title: "I will create a professional logo design for your brand",
+    title:
+      "Diseñaré el logotipo e identidad visual de tu grupo o club universitario", // Diseño Gráfico
     seller: {
       name: "Maria Garcia",
       avatar: "https://picsum.photos/seed/maria/40/40",
@@ -30,7 +31,8 @@ export const services = [
   },
   {
     id: "service-3",
-    title: "I will write engaging content for your website or blog",
+    title:
+      "Resolveré y explicaré problemas de cálculo diferencial e integral para tus tareas", // Cálculo
     seller: {
       name: "David Chen",
       avatar: "https://picsum.photos/seed/david/40/40",
@@ -44,7 +46,8 @@ export const services = [
   },
   {
     id: "service-4",
-    title: "I will edit your video with professional transitions and effects",
+    title:
+      "Editaré tus videos de laboratorio o presentaciones científicas con calidad profesional", // Diseño Gráfico
     seller: {
       name: "Sarah Wilson",
       avatar: "https://picsum.photos/seed/sarah/40/40",
@@ -59,7 +62,7 @@ export const services = [
   {
     id: "service-5",
     title:
-      "I will optimize your website for search engines and improve rankings",
+      "Optimizaré el sitio web de tu proyecto de investigación para motores de búsqueda", // Programación
     seller: {
       name: "Michael Brown",
       avatar: "https://picsum.photos/seed/michael/40/40",
@@ -73,7 +76,8 @@ export const services = [
   },
   {
     id: "service-6",
-    title: "I will develop a mobile app for iOS and Android platforms",
+    title:
+      "Desarrollaré una app móvil para tu tesis o hackathon universitario (iOS & Android)", // Programación / IoT
     seller: {
       name: "Jennifer Lee",
       avatar: "https://picsum.photos/seed/jennifer/40/40",
@@ -87,7 +91,8 @@ export const services = [
   },
   {
     id: "service-7",
-    title: "I will create stunning graphics and illustrations for your project",
+    title:
+      "Crearé infografías científicas e ilustraciones técnicas para tus reportes académicos", // Diseño Gráfico / Dibujo técnico
     seller: {
       name: "Robert Taylor",
       avatar: "https://picsum.photos/seed/robert/40/40",
@@ -101,7 +106,8 @@ export const services = [
   },
   {
     id: "service-8",
-    title: "I will provide data analysis and visualization services",
+    title:
+      "Analizaré y visualizaré datos experimentales para tu tesis (Estadística aplicada)", // Estadística
     seller: {
       name: "Lisa Anderson",
       avatar: "https://picsum.photos/seed/lisa/40/40",
@@ -115,7 +121,8 @@ export const services = [
   },
   {
     id: "service-9",
-    title: "I will compose original music for your video or podcast",
+    title:
+      "Produciré música original para videos educativos y presentaciones universitarias", // Diseño Gráfico (audiovisual)
     seller: {
       name: "James Miller",
       avatar: "https://picsum.photos/seed/james/40/40",
@@ -130,7 +137,7 @@ export const services = [
   {
     id: "service-10",
     title:
-      "I will translate documents between English and Spanish professionally",
+      "Traduciré tus artículos o documentos académicos entre inglés y español", // General
     seller: {
       name: "Carmen Rodriguez",
       avatar: "https://picsum.photos/seed/carmen/40/40",
@@ -144,7 +151,7 @@ export const services = [
   },
   {
     id: "service-11",
-    title: "I will create a comprehensive business plan for your startup",
+    title: "Elaboraré un plan de negocio para tu emprendimiento universitario", // Programación / General
     seller: {
       name: "Thomas Davis",
       avatar: "https://picsum.photos/seed/thomas/40/40",
@@ -158,7 +165,8 @@ export const services = [
   },
   {
     id: "service-12",
-    title: "I will design and develop a custom WordPress theme",
+    title:
+      "Diseñaré un tema WordPress para la página de tu facultad o proyecto estudiantil", // Programación
     seller: {
       name: "Emily White",
       avatar: "https://picsum.photos/seed/emily/40/40",
@@ -172,7 +180,8 @@ export const services = [
   },
   {
     id: "service-13",
-    title: "I will provide virtual assistant services for your business needs",
+    title:
+      "Seré tu asistente virtual para gestionar referencias y tareas de investigación", // General
     seller: {
       name: "Kevin Martinez",
       avatar: "https://picsum.photos/seed/kevin/40/40",
@@ -186,7 +195,8 @@ export const services = [
   },
   {
     id: "service-14",
-    title: "I will create animated explainer videos for your product",
+    title:
+      "Crearé videos animados para explicar experimentos de Física o Química", // Física / Química
     seller: {
       name: "Rachel Green",
       avatar: "https://picsum.photos/seed/rachel/40/40",
@@ -200,7 +210,8 @@ export const services = [
   },
   {
     id: "service-15",
-    title: "I will audit your website security and provide recommendations",
+    title:
+      "Auditaré la seguridad del portal web de tu laboratorio de investigación", // Programación
     seller: {
       name: "Daniel Kim",
       avatar: "https://picsum.photos/seed/daniel/40/40",
@@ -214,7 +225,8 @@ export const services = [
   },
   {
     id: "service-16",
-    title: "I will design user interfaces and user experience for mobile apps",
+    title:
+      "Diseñaré la interfaz de usuario para tu app académica o prototipo de investigación", // Programación / Diseño Gráfico
     seller: {
       name: "Sophie Turner",
       avatar: "https://picsum.photos/seed/sophie/40/40",
@@ -228,7 +240,8 @@ export const services = [
   },
   {
     id: "service-17",
-    title: "I will provide social media marketing and management services",
+    title:
+      "Gestionaré las redes sociales de tu asociación o proyecto estudiantil", // General
     seller: {
       name: "Mark Thompson",
       avatar: "https://picsum.photos/seed/mark/40/40",
@@ -242,7 +255,8 @@ export const services = [
   },
   {
     id: "service-18",
-    title: "I will create professional product photography for e-commerce",
+    title:
+      "Fotografiaré prototipos y proyectos para ferias y exposiciones universitarias", // Dibujo técnico / Diseño Gráfico
     seller: {
       name: "Anna Johnson",
       avatar: "https://picsum.photos/seed/anna/40/40",
@@ -256,7 +270,8 @@ export const services = [
   },
   {
     id: "service-19",
-    title: "I will write and optimize press releases for media distribution",
+    title:
+      "Redactaré y optimizaré notas de prensa para difundir tu investigación", // General
     seller: {
       name: "Chris Wilson",
       avatar: "https://picsum.photos/seed/chris/40/40",
@@ -270,7 +285,8 @@ export const services = [
   },
   {
     id: "service-20",
-    title: "I will provide legal consultation for small business matters",
+    title:
+      "Brindaré asesoría legal para la formalización de startups universitarias", // General
     seller: {
       name: "Victoria Adams",
       avatar: "https://picsum.photos/seed/victoria/40/40",
@@ -284,7 +300,8 @@ export const services = [
   },
   {
     id: "service-21",
-    title: "I will create custom illustrations and character designs",
+    title:
+      "Diseñaré ilustraciones y personajes para material didáctico universitario", // Diseño Gráfico
     seller: {
       name: "Lucas Brown",
       avatar: "https://picsum.photos/seed/lucas/40/40",
@@ -298,7 +315,8 @@ export const services = [
   },
   {
     id: "service-22",
-    title: "I will develop custom software solutions for your business",
+    title:
+      "Desarrollaré software a medida para laboratorios y centros de investigación", // Programación / IoT
     seller: {
       name: "Isabella Garcia",
       avatar: "https://picsum.photos/seed/isabella/40/40",
@@ -312,7 +330,8 @@ export const services = [
   },
   {
     id: "service-23",
-    title: "I will provide financial planning and investment advice",
+    title:
+      "Asesoraré en planificación financiera para proyectos estudiantiles y becas", // General
     seller: {
       name: "William Davis",
       avatar: "https://picsum.photos/seed/william/40/40",
@@ -326,7 +345,7 @@ export const services = [
   },
   {
     id: "service-24",
-    title: "I will create engaging podcast content and audio editing",
+    title: "Crearé y editaré podcasts educativos para cursos universitarios", // Diseño Gráfico (audiovisual)
     seller: {
       name: "Olivia Martinez",
       avatar: "https://picsum.photos/seed/olivia/40/40",
