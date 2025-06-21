@@ -5,6 +5,7 @@ import { Star, Heart } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/context/AuthContext";
 
 interface ServiceCardProps {
   id: string;
@@ -30,6 +31,7 @@ export function ServiceCard({
   reviewCount,
   isFavorite = false,
 }: ServiceCardProps) {
+  const { isAuthenticated } = useAuth();
   return (
     <Card className="group overflow-hidden transition-all hover:shadow-lg">
       <div className="relative">
@@ -40,17 +42,19 @@ export function ServiceCard({
           height={200}
           className="h-48 w-full object-cover transition-transform group-hover:scale-105"
         />
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute top-2 right-2 h-8 w-8 bg-white/80 hover:bg-white"
-        >
-          <Heart
-            className={`h-4 w-4 ${
-              isFavorite ? "fill-red-500 text-red-500" : ""
-            }`}
-          />
-        </Button>
+        {isAuthenticated && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-2 right-2 h-8 w-8 bg-white/80 hover:bg-white"
+          >
+            <Heart
+              className={`h-4 w-4 ${
+                isFavorite ? "fill-red-500 text-red-500" : ""
+              }`}
+            />
+          </Button>
+        )}
       </div>
 
       <CardContent className="p-4">
