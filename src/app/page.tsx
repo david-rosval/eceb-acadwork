@@ -50,7 +50,7 @@ export default function HomePage() {
 
           <main className="flex-1">
             {/* Hero Section */}
-            <section className="bg-gradient-to-r from-primary/10 to-primary/5 py-12">
+            <section className="bg-gradient-to-r from-primary/10 to-blue-500/10 py-12">
               <div className="container px-4">
                 <div className="max-w-2xl">
                   <h1 className="text-4xl font-bold tracking-tight mb-4">

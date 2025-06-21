@@ -23,7 +23,7 @@ export default function LoginPage() {
                 id="email"
                 name="email"
                 type="email"
-                placeholder="m@example.com"
+                placeholder="johndoe@example.edu.pe"
                 required
               />
             </div>

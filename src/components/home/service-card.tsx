@@ -71,7 +71,7 @@ export function ServiceCard({
           </div>
         </div>
 
-        <h3 className="font-medium line-clamp-2 mb-4 group-hover:text-primary">
+        <h3 className="font-medium line-clamp-2 mb-4 group-hover:text-blue-800">
           {title}
         </h3>
 
