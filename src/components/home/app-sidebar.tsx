@@ -5,14 +5,14 @@ import type React from "react";
 import {
   Code,
   Palette,
-  Megaphone,
-  Video,
-  PenTool,
-  Music,
-  Briefcase,
-  TrendingUp,
   Star,
   Filter,
+  Calculator,
+  Orbit,
+  FlaskConical,
+  ChartNoAxesCombined,
+  CircuitBoard,
+  Ruler,
 } from "lucide-react";
 
 import {
@@ -27,23 +27,28 @@ import {
   SidebarHeader,
 } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
-import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 
 const categories = [
-  { title: "Programming & Tech", icon: Code, count: 1234 },
-  { title: "Graphics & Design", icon: Palette, count: 2156 },
-  { title: "Digital Marketing", icon: Megaphone, count: 987 },
-  { title: "Video & Animation", icon: Video, count: 654 },
-  { title: "Writing & Translation", icon: PenTool, count: 1876 },
-  { title: "Music & Audio", icon: Music, count: 432 },
-  { title: "Business", icon: Briefcase, count: 765 },
-  { title: "Data", icon: TrendingUp, count: 543 },
+  { title: "Programación", icon: Code, count: 1234 },
+  { title: "Diseño Gráfico", icon: Palette, count: 2156 },
+  { title: "Cálculo", icon: Calculator, count: 987 },
+  { title: "Física", icon: Orbit, count: 654 },
+  { title: "Química", icon: FlaskConical, count: 1876 },
+  { title: "Estadística", icon: ChartNoAxesCombined, count: 543 },
+  { title: "IoT", icon: CircuitBoard, count: 765 },
+  { title: "Dibujo técnico", icon: Ruler, count: 543 },
 ];
 
-const serviceTypes = ["Basic", "Standard", "Premium"];
+const careers = [
+  "Ing. Sistemas",
+  "Ing. Mecánica & Eléctrica",
+  "Ing. Ambiental",
+  "Ing. Electrónica & Telecomunicaciones",
+  "Administración",
+];
 
-const deliveryTimes = ["24 hours", "3 days", "7 days", "14 days", "30 days"];
+const ratings = [5, 4, 3, 2, 1];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -51,14 +56,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <div className="flex items-center gap-2 px-2 py-1">
           <Filter className="h-4 w-4" />
-          <span className="font-semibold">Filters</span>
+          <span className="font-semibold">Filtros</span>
         </div>
       </SidebarHeader>
 
       <SidebarContent>
         {/* Categories */}
         <SidebarGroup>
-          <SidebarGroupLabel>Categories</SidebarGroupLabel>
+          <SidebarGroupLabel>Categorías</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {categories.map((category) => (
@@ -78,38 +83,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
         <Separator />
 
-        {/* Price Range */}
+        {/* Career */}
         <SidebarGroup>
-          <SidebarGroupLabel>Price Range</SidebarGroupLabel>
-          <SidebarGroupContent className="px-2">
-            <div className="space-y-4">
-              <Slider
-                defaultValue={[5, 500]}
-                max={1000}
-                min={5}
-                step={5}
-                className="w-full"
-              />
-              <div className="flex justify-between text-sm text-muted-foreground">
-                <span>$5</span>
-                <span>$1000+</span>
-              </div>
-            </div>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        <Separator />
-
-        {/* Service Type */}
-        <SidebarGroup>
-          <SidebarGroupLabel>Service Type</SidebarGroupLabel>
+          <SidebarGroupLabel>Carreras</SidebarGroupLabel>
           <SidebarGroupContent className="px-2">
             <div className="space-y-2">
-              {serviceTypes.map((type) => (
-                <div key={type} className="flex items-center space-x-2">
-                  <Checkbox id={type} />
-                  <label htmlFor={type} className="text-sm font-medium">
-                    {type}
+              {careers.map((career) => (
+                <div key={career} className="flex items-center space-x-2">
+                  <Checkbox id={career} />
+                  <label htmlFor={career} className="text-sm font-medium">
+                    {career}
                   </label>
                 </div>
               ))}
@@ -119,52 +102,34 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
         <Separator />
 
-        {/* Delivery Time */}
+        {/* Rating */}
         <SidebarGroup>
-          <SidebarGroupLabel>Delivery Time</SidebarGroupLabel>
+          <SidebarGroupLabel>Calificaciones</SidebarGroupLabel>
           <SidebarGroupContent className="px-2">
             <div className="space-y-2">
-              {deliveryTimes.map((time) => (
-                <div key={time} className="flex items-center space-x-2">
-                  <Checkbox id={time} />
-                  <label htmlFor={time} className="text-sm font-medium">
-                    {time}
+              {ratings.map((rating) => (
+                <div key={rating} className="flex items-center space-x-2">
+                  <Checkbox id={`rating-${rating}`} />
+                  <label
+                    htmlFor={`rating-${rating}`}
+                    className="text-sm font-medium flex items-center gap-1"
+                  >
+                    <div className="flex">
+                      {Array.from({ length: 5 }, (_, i) => (
+                        <Star
+                          key={i}
+                          className={`h-3 w-3 ${
+                            i < rating
+                              ? "fill-yellow-400 text-yellow-400"
+                              : "text-gray-300"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <span>a más</span>
                   </label>
                 </div>
               ))}
-            </div>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        <Separator />
-
-        {/* Seller Level */}
-        <SidebarGroup>
-          <SidebarGroupLabel>Seller Level</SidebarGroupLabel>
-          <SidebarGroupContent className="px-2">
-            <div className="space-y-2">
-              <div className="flex items-center space-x-2">
-                <Checkbox id="top-rated" />
-                <label
-                  htmlFor="top-rated"
-                  className="text-sm font-medium flex items-center gap-1"
-                >
-                  <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                  Top Rated Seller
-                </label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="level-2" />
-                <label htmlFor="level-2" className="text-sm font-medium">
-                  Level 2 Seller
-                </label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="level-1" />
-                <label htmlFor="level-1" className="text-sm font-medium">
-                  Level 1 Seller
-                </label>
-              </div>
             </div>
           </SidebarGroupContent>
         </SidebarGroup>
