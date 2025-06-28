@@ -9,6 +9,7 @@ const userData: Prisma.UserCreateInput[] = [
     firstName: "John",
     lastName: "Doe",
     college: "UNTELS",
+    major: "Ing. de Sistemas",
     description: "Test description 1",
     semester: 5,
     linkedinUrl: "https://www.linkedin.com/in/johndoe",
@@ -21,6 +22,7 @@ const userData: Prisma.UserCreateInput[] = [
     firstName: "Jane",
     lastName: "Doe",
     college: "UNTELS",
+    major: "Ing. Ambiental",
     description: "Test description 2",
     semester: 5,
     linkedinUrl: "https://www.linkedin.com/in/johndoe",
@@ -28,6 +30,7 @@ const userData: Prisma.UserCreateInput[] = [
     rating: 4.5,
   },
 ];
+
 
 export async function main() {
   for (const u of userData) {
