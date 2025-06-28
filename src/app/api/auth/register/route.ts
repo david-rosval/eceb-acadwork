@@ -11,6 +11,7 @@ export async function POST(req: Request) {
       firstName,
       lastName,
       college,
+      major,
       description,
       semester,
       linkedinUrl,
@@ -22,7 +23,8 @@ export async function POST(req: Request) {
       !firstName ||
       !lastName ||
       !semester ||
-      !college
+      !college ||
+      !major
     ) {
       return NextResponse.json(
         { error: "Faltan campos obligatorios" },
@@ -54,6 +56,7 @@ export async function POST(req: Request) {
         semester,
         linkedinUrl,
         status: "active",
+        major,
       },
     });
 

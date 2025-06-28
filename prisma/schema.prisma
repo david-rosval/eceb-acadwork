@@ -24,6 +24,7 @@ model User {
   college   String @default("UNTELS")
   description String?
   semester  Int
+  major     String
   linkedinUrl String?
   status    String   @default("active")
   rating    Decimal  @db.Decimal(3,2) @default(0.00)

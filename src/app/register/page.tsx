@@ -18,6 +18,14 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 
+const majorOptions = [
+  "Administración de Empresas",
+  "Ing. Ambiental",
+  "Ing. de Sistemas",
+  "Ing. Electrónica y Telecomunicaciones",
+  "Ing. Mecánica y Eléctrica",
+];
+
 export default function RegisterPage() {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
@@ -27,6 +35,7 @@ export default function RegisterPage() {
     email: "",
     password: "",
     college: "",
+    major: "",
     semester: "",
     linkedinUrl: "",
     description: "",
@@ -103,7 +112,7 @@ export default function RegisterPage() {
                 id="email"
                 name="email"
                 type="email"
-                placeholder="john@example.com"
+                placeholder="john@ejemplo.com"
                 required
                 value={form.email}
                 onChange={handleChange}
@@ -123,48 +132,76 @@ export default function RegisterPage() {
               />
             </div>
 
-            {/* College and Semester */}
-            <div className="grid grid-cols-2 gap-4">
+            {/* College, Major & Semester */}
+            <div className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="college">Universidad *</Label>
-                <Input
-                  id="college"
-                  name="college"
-                  type="text"
-                  placeholder="University name"
-                  value={form.college}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="semester">Semestre *</Label>
                 <Select
-                  name="semester"
+                  name="college"
                   required
-                  value={form.semester}
+                  value={form.college}
                   onValueChange={(value) =>
-                    setForm({ ...form, semester: value })
+                    setForm({ ...form, college: value })
                   }
                 >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select semester" />
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Seleccionar Universidad" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="1">1</SelectItem>
-                    <SelectItem value="2">2</SelectItem>
-                    <SelectItem value="3">3</SelectItem>
-                    <SelectItem value="4">4</SelectItem>
-                    <SelectItem value="5">5</SelectItem>
-                    <SelectItem value="6">6</SelectItem>
-                    <SelectItem value="7">7</SelectItem>
-                    <SelectItem value="8">8</SelectItem>
-                    <SelectItem value="9">9</SelectItem>
-                    <SelectItem value="10">10</SelectItem>
+                      <SelectItem value="UNTELS">
+                        Universidad Nacional Tecnológica de Lima Sur
+                      </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="major">Carrera *</Label>
+                  <Select
+                    name="major"
+                    required
+                    value={form.major}
+                    onValueChange={(value) =>
+                      setForm({ ...form, major: value })
+                    }
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Seleccionar Carrera" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {majorOptions.map((option) => (
+                        <SelectItem key={option} value={option}>
+                          {option}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="semester">Semestre *</Label>
+                  <Select
+                    name="semester"
+                    required
+                    value={form.semester}
+                    onValueChange={(value) =>
+                      setForm({ ...form, semester: value })
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Seleccionar semestre" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {[...Array(10)].map((_, index) => (
+                        <SelectItem key={index + 1} value={(index + 1).toString()}>
+                          {index + 1}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
             </div>
-
+            
             {/* LinkedIn URL */}
             <div className="space-y-2">
               <Label htmlFor="linkedinUrl">Perfil de LinkedIn (opcional)</Label>
@@ -172,7 +209,7 @@ export default function RegisterPage() {
                 id="linkedinUrl"
                 name="linkedinUrl"
                 type="url"
-                placeholder="https://linkedin.com/in/yourprofile"
+                placeholder="https://linkedin.com/in/tu-perfil"
                 value={form.linkedinUrl}
                 onChange={handleChange}
               />
