@@ -31,7 +31,23 @@ export async function POST(req: Request) {
     const accessToken = generateAccessToken(user.id);
     const refreshToken = generateRefreshToken(user.id);
 
-    const res = NextResponse.json({ accessToken });
+    // Extraer solo los campos necesarios del usuario
+    const userProfile = {
+      id: user.id,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      major: user.major,
+      college: user.college,
+      semester: user.semester,
+      linkedinUrl: user.linkedinUrl,
+      description: user.description,
+    };
+
+    const res = NextResponse.json({
+      accessToken,
+      user: userProfile,
+    });
 
     // Set cookie HttpOnly con el refresh token
     res.headers.append(
