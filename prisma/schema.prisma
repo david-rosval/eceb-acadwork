@@ -50,6 +50,7 @@ model Service {
   price Decimal @db.Decimal(10,2)
   categoryId Int
   category Category @relation(fields: [categoryId], references: [id])
+  imageUrl String?
   userId String
   user User @relation(fields: [userId], references: [id])
   status String @default("active")

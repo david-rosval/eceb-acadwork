@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { verifyRefreshToken, generateAccessToken } from "@/lib/auth/jwt";
 import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 export async function POST() {
   try {
@@ -18,7 +19,16 @@ export async function POST() {
 
     const newAccessToken = generateAccessToken(userId);
 
-    return NextResponse.json({ accessToken: newAccessToken });
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+      }
+    })
+
+    return NextResponse.json({ accessToken: newAccessToken, user });
   } catch (error) {
     console.error("[REFRESH_TOKEN_ERROR]", error);
     return NextResponse.json(

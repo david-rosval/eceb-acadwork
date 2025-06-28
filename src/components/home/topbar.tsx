@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, Bell, MessageCircle, User } from "lucide-react";
+import { Search, Bell, MessageCircle } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -9,14 +9,17 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/context/AuthContext";
+import Image from "next/image";
+import { formattedUserName } from "@/lib/utils";
 
 export function Topbar() {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, user } = useAuth();
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between px-4">
@@ -55,8 +58,11 @@ export function Topbar() {
                 variant="ghost"
                 size="sm"
                 className="hidden lg:inline-flex"
+                asChild
               >
-                Ofrece un servicio
+                <Link href="/student-services/new">
+                  Ofrece un servicio
+                </Link>
               </Button>
 
               <Button variant="ghost" size="icon" className="relative">
@@ -74,16 +80,22 @@ export function Topbar() {
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <User className="h-4 w-4" />
+                  <Button variant="ghost" size="icon" className="relative overflow-hidden cursor-pointer">
+                    <Image 
+                      alt="Logged in user avatar"
+                      src={`https://ui-avatars.com/api/?name=${formattedUserName(user?.firstName, user?.lastName)}`}
+                      fill
+                    />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
+                <DropdownMenuContent align="end" className="">
+                  <DropdownMenuLabel className="text-xs truncate max-w-[148px]">Bienvenido a Acadwork, <br/>{user?.firstName}</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
                   <DropdownMenuItem>Perfil</DropdownMenuItem>
                   <DropdownMenuItem>Configuración</DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
-                    <Button onClick={logout}>Cerrar Sesión</Button>
+                    <Button className="w-full" onClick={logout}>Cerrar Sesión</Button>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

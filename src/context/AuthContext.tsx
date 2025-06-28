@@ -9,9 +9,16 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 
+type UserInfo = {
+  id: string;
+  firstName: string;
+  lastName: string;
+}
+
 type AuthContextType = {
   accessToken: string | null;
-  login: (token: string) => void;
+  user: UserInfo | null;
+  login: (token: string, user: UserInfo) => void;
   logout: () => void;
   refreshToken: () => Promise<void>;
   isAuthenticated: boolean;
@@ -21,6 +28,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [user, setUser] = useState<UserInfo | null>(null)
   const router = useRouter();
 
   const login = (token: string) => {
@@ -41,10 +49,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       });
 
       if (res.ok) {
-        const { accessToken } = await res.json();
+        const { accessToken, user } = await res.json();
         setAccessToken(accessToken);
+        setUser(user)
       } else {
         setAccessToken(null);
+        setUser(null)
       }
     } catch {
       setAccessToken(null);
@@ -60,6 +70,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     <AuthContext.Provider
       value={{
         accessToken,
+        user,
         login,
         logout,
         refreshToken,
