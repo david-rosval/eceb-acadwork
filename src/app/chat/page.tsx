@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Search, MoreVertical, MessageCircle } from "lucide-react"
+import { Search, MoreVertical, MessageCircle, ArrowLeft } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -100,6 +100,12 @@ export default function ChatPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
+        <div className="mb-3">
+          <Link href="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary">
+            <ArrowLeft className="h-4 w-4" />
+            Regresar al inicio
+          </Link>
+        </div>
         <div className="grid lg:grid-cols-4 gap-6 h-[calc(100vh-8rem)]">
           {/* Sidebar */}
           <div className="lg:col-span-1 bg-white rounded-lg shadow-sm border">
