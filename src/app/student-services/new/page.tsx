@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
@@ -13,26 +12,55 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { FileUpload } from "@/components/student-services/new/file-upload" 
-
-const categories = [
-  "Programming & Tech",
-  "Graphics & Design",
-  "Digital Marketing",
-  "Video & Animation",
-  "Writing & Translation",
-  "Music & Audio",
-  "Business",
-  "Data",
-]
+import { useCategories } from "@/hooks/useCategories"
+import { useCreateService } from "@/hooks/useCreateService"
+import { useRouter } from "next/navigation"
 
 export default function NewServicePage() {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const router = useRouter();
+  
+  const { data: categories, isLoading, isError } = useCategories();
+  const [, setSelectedFile] = useState<File | null>(null)
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [categoryId, setCategoryId] = useState<string | null>(null);
+  const { mutate, isPending } = useCreateService();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle form submission here
-    console.log("Form submitted with file: ", selectedFile)
+const handleSubmit = (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (!categoryId) {
+    alert("Debes seleccionar una categoría.");
+    return;
   }
+
+  if (!title || !description || !price) {
+    alert("Completa todos los campos requeridos.");
+    return;
+  }
+
+  mutate(
+    {
+      title,
+      description,
+      price: parseFloat(price),
+      categoryId: parseInt(categoryId),
+    },
+    {
+      onSuccess: ({ service }) => {
+        console.log("Servicio creado:", service);
+        alert("Servicio publicado con éxito");
+        router.push("/");
+      },
+      onError: (error) => {
+        const err = error as Error;
+        alert(err.message || "Ocurrió un error");
+      },
+    }
+  );
+};
+
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -67,22 +95,34 @@ export default function NewServicePage() {
                     type="text"
                     placeholder="Desarrollaré un sitio web para tu proyecto que consuma tu API"
                     required
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                   />
                 </div>
 
                 {/* Category */}
                 <div className="space-y-2">
                   <Label htmlFor="category">Categoría *</Label>
-                  <Select name="category" required>
+                  <Select name="category" required onValueChange={(value) => setCategoryId(value)}>
                     <SelectTrigger>
                       <SelectValue placeholder="Seleccionar categoría" />
                     </SelectTrigger>
                     <SelectContent>
-                      {categories.map((category) => (
-                        <SelectItem key={category} value={category.toLowerCase().replace(/\s+/g, "-")}>
-                          {category}
+                      {isLoading ? (
+                        <SelectItem value="loading" disabled>
+                          Cargando...
                         </SelectItem>
-                      ))}
+                      ) : isError ? (
+                        <SelectItem value="error" disabled>
+                          Error al cargar
+                        </SelectItem>
+                      ) : (
+                        categories?.map((category) => (
+                          <SelectItem key={category.id} value={category.id.toString()}>
+                            {category.name}
+                          </SelectItem>
+                        ))
+                      )}
                     </SelectContent>
                   </Select>
                 </div>
@@ -101,6 +141,9 @@ export default function NewServicePage() {
                       placeholder="20"
                       className="pl-8"
                       required
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
+
                     />
                   </div>
                   <p className="text-xs text-muted-foreground">
@@ -117,6 +160,8 @@ export default function NewServicePage() {
                     placeholder="Describe tu servicio en detalle. ¿Qué entregarás? ¿Qué hace único a tu servicio? Incluye cualquier requisito del comprador..."
                     className="min-h-[120px] resize-none"
                     required
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                   />
                   <p className="text-xs text-muted-foreground">
                     Mínimo 100 caracteres. Sé específico sobre lo que ofreces.
@@ -128,8 +173,8 @@ export default function NewServicePage() {
 
                 {/* Submit Button */}
                 <div className="flex gap-4 pt-4">
-                  <Button type="submit" className="flex-1">
-                    Publicar Servicio
+                  <Button type="submit" className="flex-1" disabled={isPending}>
+                    {isPending ? "Publicando..." : "Publicar Servicio"}
                   </Button>
                   <Button type="button" variant="outline" asChild>
                     <Link href="/">Cancelar</Link>
