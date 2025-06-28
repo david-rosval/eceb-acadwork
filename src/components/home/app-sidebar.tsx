@@ -28,29 +28,38 @@ import {
 } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useCategories } from "@/hooks/useCategories";
 
-const categories = [
-  { title: "Programación", icon: Code, count: 1234 },
-  { title: "Diseño Gráfico", icon: Palette, count: 2156 },
-  { title: "Cálculo", icon: Calculator, count: 987 },
-  { title: "Física", icon: Orbit, count: 654 },
-  { title: "Química", icon: FlaskConical, count: 1876 },
-  { title: "Estadística", icon: ChartNoAxesCombined, count: 543 },
-  { title: "IoT", icon: CircuitBoard, count: 765 },
-  { title: "Dibujo técnico", icon: Ruler, count: 543 },
+const categoryIcons = [
+  { title: "Programación", icon: Code },
+  { title: "Diseño Gráfico", icon: Palette },
+  { title: "Cálculo", icon: Calculator },
+  { title: "Física", icon: Orbit  },
+  { title: "Química", icon: FlaskConical  },
+  { title: "Estadística", icon: ChartNoAxesCombined  },
+  { title: "IoT", icon: CircuitBoard  },
+  { title: "Dibujo técnico", icon: Ruler },
 ];
 
 const careers = [
-  "Ing. Sistemas",
-  "Ing. Mecánica & Eléctrica",
+  "Administración de Empresas",
   "Ing. Ambiental",
-  "Ing. Electrónica & Telecomunicaciones",
-  "Administración",
+  "Ing. de Sistemas",
+  "Ing. Electrónica y Telecomunicaciones",
+  "Ing. Mecánica y Eléctrica",
 ];
 
 const ratings = [5, 4, 3, 2, 1];
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  onCategorySelect: (category: number | undefined) => void;
+  onMajorSelect: (major: string | undefined) => void;
+}
+
+export function AppSidebar({ onCategorySelect, onMajorSelect, ...props }: AppSidebarProps) {
+  const { data: categories, isLoading, isError } = useCategories();
+  
+
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -66,17 +75,34 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarGroupLabel>Categorías</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {categories.map((category) => (
-                <SidebarMenuItem key={category.title}>
-                  <SidebarMenuButton>
-                    <category.icon className="h-4 w-4" />
-                    <span className="flex-1">{category.title}</span>
-                    <span className="text-xs text-muted-foreground">
-                      ({category.count})
-                    </span>
-                  </SidebarMenuButton>
+              {isLoading ? (
+                <SidebarMenuItem>
+                  Cargando categorías...
                 </SidebarMenuItem>
-              ))}
+              ) : isError ? (
+                <SidebarMenuItem>
+                  Error al cargar categorías...
+                </SidebarMenuItem>
+              ) : (
+                categories?.map((category) => {
+                  const IconComponent = categoryIcons.find((icon) => icon.title === category.name)?.icon;
+                  return (
+                    <SidebarMenuItem key={category.name}>
+                      <SidebarMenuButton onClick={() => onCategorySelect(category.id)}>
+                        {IconComponent ? (
+                          <IconComponent className="h-4 w-4 mr-2" />
+                        ) : (
+                          <Star className="h-4 w-4 mr-2" />
+                        )}
+                        <span className="flex-1">{category.name}</span>
+                        <span className="text-xs text-muted-foreground">
+                          ({category.serviceCount})
+                        </span>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                })
+              )}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -90,7 +116,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <div className="space-y-2">
               {careers.map((career) => (
                 <div key={career} className="flex items-center space-x-2">
-                  <Checkbox id={career} />
+                  <Checkbox id={career} onCheckedChange={(checked) => onMajorSelect(checked ? career : undefined)} />
                   <label htmlFor={career} className="text-sm font-medium">
                     {career}
                   </label>

@@ -37,6 +37,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = useCallback(async () => {
     setAccessToken(null);
+    setUser(null);
     await fetch("/api/auth/logout", { method: "POST" });
     router.push("/login");
   }, [router]);

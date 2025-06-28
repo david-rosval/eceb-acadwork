@@ -27,24 +27,69 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Grid, List } from "lucide-react";
-import { services } from "@/mock/sample";
+import { BrushCleaning, Grid, List } from "lucide-react";
+import { useServices } from "@/hooks/useService";
 
 export default function HomePage() {
-  const [currentPage, setCurrentPage] = useState(1);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const servicesPerPage = 12;
-  const totalPages = Math.ceil(services.length / servicesPerPage);
+  const [sort, setSort] = useState<"price" | "rating" | "createdAt" | undefined>();
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc" | undefined>();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [categoryId, setCategoryId] = useState<number | undefined>();
+  const [major, setMajor] = useState<string | undefined>();
 
-  const currentServices = services.slice(
-    (currentPage - 1) * servicesPerPage,
-    currentPage * servicesPerPage
-  );
+  const { data, isLoading, isError } = useServices({
+    page: currentPage,
+    limit: 12,
+    sort,
+    sortDirection,
+    categoryId,
+    major
+  });
+
+  const services = data?.services || [];
+  const totalPages = data?.totalPages || 1;
+
+  const handleSortChange = (value: string) => {
+    switch (value) {
+      case "recommended":
+      case "newest":
+        setSort("createdAt");
+        setSortDirection("desc");
+        break;
+      case "price-low":
+        setSort("price");
+        setSortDirection("asc");
+        break;
+      case "price-high":
+        setSort("price");
+        setSortDirection("desc");
+        break;
+      case "rating":
+        setSort("rating");
+        setSortDirection("desc");
+        break;
+      default:
+        setSort(undefined);
+        setSortDirection(undefined);
+    }
+
+    setCurrentPage(1); // Reiniciar paginación al cambiar orden
+  };
 
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full">
-        <AppSidebar />
+        <AppSidebar
+          onCategorySelect={(value) => {
+            setCategoryId(value);
+            setCurrentPage(1);
+          }}
+          onMajorSelect={(value) => {
+            setMajor(value);
+            setCurrentPage(1);
+          }}
+        />
         <SidebarInset className="flex-1">
           <Topbar />
 
@@ -77,22 +122,26 @@ export default function HomePage() {
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <Select defaultValue="recommended">
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setCategoryId(undefined);
+                        setMajor(undefined);
+                      }}
+                    >
+                      Limpiar filtros
+                      <BrushCleaning />
+                    </Button>
+                    <Select defaultValue="recommended" onValueChange={handleSortChange}>
                       <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Sort by" />
+                        <SelectValue placeholder="Ordenar por" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="recommended">Recomendado</SelectItem>
                         <SelectItem value="newest">Nuevo</SelectItem>
-                        <SelectItem value="price-low">
-                          Precio: Bajo a Alto
-                        </SelectItem>
-                        <SelectItem value="price-high">
-                          Precio: Alto a Bajo
-                        </SelectItem>
-                        <SelectItem value="rating">
-                          Mejor Calificados
-                        </SelectItem>
+                        <SelectItem value="price-low">Precio: Bajo a Alto</SelectItem>
+                        <SelectItem value="price-high">Precio: Alto a Bajo</SelectItem>
+                        <SelectItem value="rating">Mejor Calificados</SelectItem>
                       </SelectContent>
                     </Select>
 
@@ -128,9 +177,17 @@ export default function HomePage() {
                     : "grid-cols-1"
                 }`}
               >
-                {currentServices.map((service) => (
-                  <ServiceCard key={service.id} {...service} />
-                ))}
+                {isLoading ? (
+                  <p className="text-center text-muted-foreground">Cargando servicios...</p>
+                ) : isError ? (
+                  <p className="text-center text-red-500">Error al cargar servicios</p>
+                ) : services.length === 0 ? (
+                  <p className="text-center text-muted-foreground">No hay servicios disponibles</p>
+                ) : (
+                  services.map((service) => (
+                    <ServiceCard key={service.id} {...service} />
+                  ))
+                )}
               </div>
 
               {/* Pagination */}
