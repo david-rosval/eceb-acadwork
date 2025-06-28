@@ -3,10 +3,10 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  context: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }>}
 ) {
   try {
-    const { id } = await context.params; // ✅ mover esto dentro del try
+    const { id } = await params; // ✅ mover esto dentro del try
 
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page") || "1");
