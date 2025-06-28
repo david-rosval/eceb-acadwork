@@ -65,18 +65,20 @@ export function Topbar() {
                 </Link>
               </Button>
 
-              <Button variant="ghost" size="icon" className="relative">
+              <Button variant="ghost" size="icon" className="relative cursor-pointer">
                 <Bell className="h-4 w-4" />
                 <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs flex items-center justify-center">
                   3
                 </Badge>
               </Button>
 
-              <Button variant="ghost" size="icon" className="relative">
-                <MessageCircle className="h-4 w-4" />
-                <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs flex items-center justify-center">
-                  2
-                </Badge>
+              <Button variant="ghost" size="icon" className="relative cursor-pointer" asChild>
+                <Link href="/chat">
+                  <MessageCircle className="h-4 w-4" />
+                  <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs flex items-center justify-center">
+                    2
+                  </Badge>
+                </Link>
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
