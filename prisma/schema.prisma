@@ -30,4 +30,73 @@ model User {
   rating    Decimal  @db.Decimal(3,2) @default(0.00)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  services  Service[]
+  transactions Transaction[]
+  reviews   Review[]
+  messagesSent Message[] @relation("MessagesSent")
+  messagesReceived Message[] @relation("MessagesReceived")
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+  name String @unique
+  services Service[]
+}
+
+model Service {
+  id String @id @default(uuid())
+  title String
+  description String?
+  price Decimal @db.Decimal(10,2)
+  categoryId Int
+  category Category @relation(fields: [categoryId], references: [id])
+  imageUrl String?
+  userId String
+  user User @relation(fields: [userId], references: [id])
+  status String @default("active")
+  rating Decimal @db.Decimal(3,2) @default(0.00)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  transactions Transaction[]
+}
+
+model Transaction {
+  id String @id @default(uuid())
+  serviceId String
+  service Service @relation (fields: [serviceId], references: [id])
+  requesterId String
+  requester User @relation (fields: [requesterId], references: [id])
+  transactionDate DateTime @default(now())
+  paymentDay DateTime?
+  paymentMethod String?
+  status String @default("pending")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  reviews Review[]
+}
+
+model Review {
+  id String @id @default(uuid())
+  transactionId String
+  transaction Transaction @relation(fields: [transactionId], references: [id])
+  ratedUserId String
+  ratedUser User @relation(fields: [ratedUserId], references: [id])
+  score Int
+  comment String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt 
+  @@unique([transactionId, ratedUserId]) 
+}
+
+model Message {
+  id String @id @default(uuid())
+  senderId String
+  sender User @relation("MessagesSent", fields: [senderId], references: [id])
+  receiverId String
+  receiver User @relation("MessagesReceived", fields: [receiverId], references: [id])
+  content String
+  sendAt DateTime @default(now())
+  readStatus Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

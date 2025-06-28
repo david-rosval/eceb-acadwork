@@ -26,12 +26,14 @@ export default function LoginPage() {
     const res = await fetch("/api/auth/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
     });
 
     if (res.ok) {
-      const { accessToken } = await res.json();
-      login(accessToken); // guarda token en el context
-      router.push("/dashboard");
+      const { accessToken, user } = await res.json();
+      login(accessToken, user); // guarda token en el context
+      router.push("/");
     } else {
       const { error } = await res.json();
       alert(error);
