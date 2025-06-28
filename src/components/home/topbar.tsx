@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, Bell, MessageCircle } from "lucide-react";
+import { Search, Bell, MessageCircle, User } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -83,11 +83,15 @@ export function Topbar() {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon" className="relative overflow-hidden cursor-pointer">
-                    <Image 
-                      alt="Logged in user avatar"
-                      src={`https://ui-avatars.com/api/?name=${formattedUserName(user?.firstName, user?.lastName)}`}
-                      fill
-                    />
+                    {user ? (
+                      <Image
+                        alt="Logged in user avatar"
+                        src={`https://ui-avatars.com/api/?name=${formattedUserName(user?.firstName, user?.lastName)}`}
+                        fill
+                      />
+                    ) : (
+                      <User className="h-12 w-12" />
+                    )}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="">
