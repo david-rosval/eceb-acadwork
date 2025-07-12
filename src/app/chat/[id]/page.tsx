@@ -8,13 +8,13 @@ import { ArrowLeft, Send, Paperclip, MoreVertical, Phone, Video, Loader } from "
 import { pusherClient } from "@/lib/pusher"
 import { useGetOldMessages } from "@/hooks/useGetOldMessages"
 import { useUserById } from "@/hooks/useUserById"
-import { sendMessage } from "@/actions/message.action"
 import { useAuth } from "@/context/AuthContext"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import axios from "axios"
 
 interface Message {
   id: string
@@ -94,7 +94,7 @@ export default function ChatDetailPage() {
   const handleSendMessage = async () => {
     if (!newMessage.trim() || !senderId) return
 
-    await sendMessage({
+    await axios.post("/api/messages", {
       senderId,
       receiverId,
       content: newMessage.trim(),
