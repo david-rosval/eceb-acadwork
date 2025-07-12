@@ -170,7 +170,7 @@ export default function ChatDetailPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
-        <div className="bg-white rounded-lg shadow-sm border h-[calc(100vh-8rem)] flex flex-col">
+        <div className="bg-white rounded-lg shadow-sm border h-[calc(100vh-8rem)] flex flex-col overflow-hidden">
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b">
             <div className="flex items-center gap-3">
@@ -208,63 +208,67 @@ export default function ChatDetailPage() {
             </div>
           </div>
 
-          {/* Messages */}
-          <ScrollArea className="flex-1 p-4">
-            <div className="space-y-4">
-              {messages.map((msg) => (
-                <div key={msg.id} className={`flex ${msg.isCurrentUser ? "justify-end" : "justify-start"}`}>
-                  <div className={`flex gap-2 max-w-[70%] ${msg.isCurrentUser ? "flex-row-reverse" : "flex-row"}`}>
-                    {!msg.isCurrentUser && (
-                      <Avatar className="h-8 w-8">
-                        <AvatarImage src={avatarSrc} />
-                        <AvatarFallback>{formattedUserName(chatUser.firstName, chatUser.lastName)}</AvatarFallback>
-                      </Avatar>
-                    )}
-                    <div
-                      className={`rounded-lg px-3 py-2 ${
-                        msg.isCurrentUser ? "bg-primary text-primary-foreground" : "bg-muted"
-                      }`}
-                    >
-                      <p className="text-sm">{msg.content}</p>
-                      <p
-                        className={`text-xs mt-1 ${
-                          msg.isCurrentUser ? "text-primary-foreground/70" : "text-muted-foreground"
+          {/* Mensajes y input */}
+          <div className="flex flex-col flex-1 overflow-hidden">
+            {/* Área de scroll de mensajes */}
+            <ScrollArea className="flex-1 overflow-y-auto px-4 py-2">
+              <div className="space-y-4">
+                {messages.map((msg) => (
+                  <div key={msg.id} className={`flex ${msg.isCurrentUser ? "justify-end" : "justify-start"}`}>
+                    <div className={`flex gap-2 max-w-[70%] ${msg.isCurrentUser ? "flex-row-reverse" : "flex-row"}`}>
+                      {!msg.isCurrentUser && (
+                        <Avatar className="h-8 w-8">
+                          <AvatarImage src={avatarSrc} />
+                          <AvatarFallback>{formattedUserName(chatUser.firstName, chatUser.lastName)}</AvatarFallback>
+                        </Avatar>
+                      )}
+                      <div
+                        className={`rounded-lg px-3 py-2 ${
+                          msg.isCurrentUser ? "bg-primary text-primary-foreground" : "bg-muted"
                         }`}
                       >
-                        {formatTime(msg.timestamp)}
-                      </p>
+                        <p className="text-sm">{msg.content}</p>
+                        <p
+                          className={`text-xs mt-1 ${
+                            msg.isCurrentUser ? "text-primary-foreground/70" : "text-muted-foreground"
+                          }`}
+                        >
+                          {formatTime(msg.timestamp)}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-              <div ref={messagesEndRef} />
-            </div>
-          </ScrollArea>
-
-          {/* Message Input */}
-          <div className="border-t p-4">
-            <div className="flex items-center gap-2">
-              <Button variant="ghost" size="icon" className="shrink-0">
-                <Paperclip className="h-4 w-4" />
-              </Button>
-              <div className="flex-1">
-                <Input
-                  placeholder="Escribe tu mensaje..."
-                  value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                />
+                ))}
+                <div ref={messagesEndRef} />
               </div>
-              <Button onClick={handleSendMessage} disabled={!newMessage.trim()} className="shrink-0">
-                <Send className="h-4 w-4" />
-              </Button>
+            </ScrollArea>
+
+            {/* Input de mensaje */}
+            <div className="border-t p-4 shrink-0">
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" size="icon" className="shrink-0">
+                  <Paperclip className="h-4 w-4" />
+                </Button>
+                <div className="flex-1">
+                  <Input
+                    placeholder="Escribe tu mensaje..."
+                    value={newMessage}
+                    onChange={(e) => setNewMessage(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                  />
+                </div>
+                <Button onClick={handleSendMessage} disabled={!newMessage.trim()} className="shrink-0">
+                  <Send className="h-4 w-4" />
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground mt-2">
+                Presiona Enter para enviar. Usa Shift+Enter para salto de línea.
+              </p>
             </div>
-            <p className="text-xs text-muted-foreground mt-2">
-              Presiona Enter para enviar. Usa Shift+Enter para salto de línea.
-            </p>
           </div>
         </div>
       </div>
     </div>
   )
+
 }
