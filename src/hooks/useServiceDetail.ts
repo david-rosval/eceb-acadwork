@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import axiosClient from "@/lib/axios";
 
 interface SellerInfo {
+  id: string;
   firstName: string;
   lastName: string;
   avatar?: string;

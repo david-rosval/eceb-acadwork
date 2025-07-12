@@ -222,9 +222,11 @@ export default function ServiceDetailPage() {
                 <CardTitle>Contactar estudiante</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <Button className="w-full" size="lg">
-                  <MessageCircle className="h-4 w-4 mr-2" />
-                  Iniciar chat
+                <Button asChild className="w-full" size="lg">
+                  <Link href={`/chat/${seller.id}`}>
+                    <MessageCircle className="h-4 w-4 mr-2" />
+                    Iniciar chat
+                  </Link>
                 </Button>
                 <p className="text-sm text-muted-foreground text-center">
                   ¿Tienes preguntas? Envía un mensaje a {seller.firstName} para discutir tu proyecto.
