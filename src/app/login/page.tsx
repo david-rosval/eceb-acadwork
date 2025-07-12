@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -33,10 +34,11 @@ export default function LoginPage() {
     if (res.ok) {
       const { accessToken, user } = await res.json();
       login(accessToken, user); // guarda token en el context
+      toast.success("Inicio de sesión exitoso");
       router.push("/");
     } else {
       const { error } = await res.json();
-      alert(error);
+      toast.error(error);
     }
   };
 

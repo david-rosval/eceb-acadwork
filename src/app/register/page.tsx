@@ -17,6 +17,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { toast } from "sonner";
 
 const majorOptions = [
   "Administración de Empresas",
@@ -59,10 +60,11 @@ export default function RegisterPage() {
     });
 
     if (res.ok) {
+      toast.success("Cuenta creada con éxito");
       router.push("/login");
     } else {
       const data = await res.json();
-      alert(data.error);
+      toast.error(data.error);
     }
   };
 

@@ -15,6 +15,7 @@ import { FileUpload } from "@/components/student-services/new/file-upload"
 import { useCategories } from "@/hooks/useCategories"
 import { useCreateService } from "@/hooks/useCreateService"
 import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 export default function NewServicePage() {
   const router = useRouter();
@@ -31,12 +32,12 @@ const handleSubmit = (e: React.FormEvent) => {
   e.preventDefault();
 
   if (!categoryId) {
-    alert("Debes seleccionar una categoría.");
+    toast.error("Debes seleccionar una categoría.");
     return;
   }
 
   if (!title || !description || !price) {
-    alert("Completa todos los campos requeridos.");
+    toast.error("Completa todos los campos requeridos.");
     return;
   }
 
@@ -50,12 +51,12 @@ const handleSubmit = (e: React.FormEvent) => {
     {
       onSuccess: ({ service }) => {
         console.log("Servicio creado:", service);
-        alert("Servicio publicado con éxito");
+        toast.success("Servicio publicado con éxito");
         router.push("/");
       },
       onError: (error) => {
         const err = error as Error;
-        alert(err.message || "Ocurrió un error");
+        toast.error(err.message || "Ocurrió un error");
       },
     }
   );

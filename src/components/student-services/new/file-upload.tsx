@@ -8,6 +8,7 @@ import Image from "next/image"
 
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
+import { toast } from "sonner"
 
 interface FileUploadProps {
   onFileSelect: (file: File | null) => void
@@ -51,7 +52,7 @@ export function FileUpload({ onFileSelect, accept = "image/*", maxSize = 5 }: Fi
   const handleFileSelect = (selectedFile: File) => {
     // Check file size
     if (selectedFile.size > maxSize * 1024 * 1024) {
-      alert(`File size must be less than ${maxSize}MB`)
+      toast.error(`File size must be less than ${maxSize}MB`)
       return
     }
 
