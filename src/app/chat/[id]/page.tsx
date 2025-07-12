@@ -131,7 +131,7 @@ export default function ChatDetailPage() {
   if (chatUserIsLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
+        <div className="text-center flex flex-col items-center">
           <h1 className="text-2xl font-bold mb-4">Cargando mensajes...</h1>
           <Loader className="animate-spin" />
         </div>
